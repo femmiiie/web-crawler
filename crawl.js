@@ -39,8 +39,20 @@ function getURLsFromHTML(htmlBody, baseURL){
     return returnArr;
 }
 
-function crawlPage(baseURL){
-
+async function crawlPage(baseURL){
+    await fetch(baseURL)
+    .then(response => {
+        if(response.headers['content-type'] !== 'text/html'){
+            throw 'Content type of Webpage is incorrect!';
+        } else if (response.status !== 200) {
+            throw 'Error Connecting to the Webpage!';
+        }
+        return response.text();
+    
+    })
+    .then(null, response =>{
+        return;
+    });
 }
 
 
