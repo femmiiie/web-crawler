@@ -39,20 +39,22 @@ function getURLsFromHTML(htmlBody, baseURL){
     return returnArr;
 }
 
-async function crawlPage(baseURL){
-    await fetch(baseURL)
-    .then(response => {
-        if(response.headers['content-type'] !== 'text/html'){
-            throw 'Content type of Webpage is incorrect!';
-        } else if (response.status !== 200) {
-            throw 'Error Connecting to the Webpage!';
+async function crawlPage(baseURL, currentURL, pages){
+    try{
+        let response = await fetch(baseURL);
+        if(response.status>399){
+            console.log(`Recieved HTTP Error, Error Code ${response.status}`);
+            return;
         }
-        return response.text();
-    
-    })
-    .then(null, response =>{
-        return;
-    });
+        const content = response.headers.get('content-type');
+        if (!content.includes('text/html')){
+            console.log('Invalid Content Type');
+            return;
+        }
+        console.log(await response.text());
+        } catch(err) {
+            console.log(err.message);
+        }
 }
 
 
