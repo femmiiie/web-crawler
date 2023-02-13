@@ -71,16 +71,17 @@ async function crawlPage(baseURL, currentURL, pages){
         }
         let rawUrlArr = await response.text();
         let urlArr = getURLsFromHTML(rawUrlArr, baseURL);
+        var promises = [];
         urlArr.forEach(url => {
-   
-            crawlPage(baseURL, url, pages);
-        })
+            promises.push(crawlPage(baseURL, url, pages));
+        });
+        await Promise.all(promises);
 
         } catch(err) {
             console.log(err.message);
         }
-    console.log(pages)
-    return pages;
+    //console.log(pages)
+    return pages;  
 }
 
 
