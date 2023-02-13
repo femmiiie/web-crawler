@@ -42,17 +42,17 @@ async function crawlPage(baseURL, currentURL, pages){
     try{
         formCurrentURL = new URL(currentURL);
     } catch {
-        return pages;
+        return;
     }
     if (formBaseURL.hostname !== formCurrentURL.hostname){
-        return pages;
+        return;
     }
 
     //Increments pages and returns if URL has been seen before
     currentURL = normalizeURL(currentURL);
     if (pages[currentURL] !== undefined && currentURL !== baseURL){
         pages[currentURL] ++;
-        return pages;
+        return;
     }
 
     //Sets initial value of new page
@@ -71,7 +71,6 @@ async function crawlPage(baseURL, currentURL, pages){
         }
         let rawUrlArr = await response.text();
         let urlArr = getURLsFromHTML(rawUrlArr, baseURL);
-        console.log(urlArr);
         urlArr.forEach(url => {
    
             crawlPage(baseURL, url, pages);
