@@ -7,6 +7,7 @@ function printReport(pages){
     }
 }
 
+
 module.exports = {
     printReport
 };

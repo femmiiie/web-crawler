@@ -8,7 +8,10 @@ async function main(){
     }
     url = process.argv[2];
     console.log(`The web crawler will start at ${url}`)
-    printReport(await crawlPage(url, url, {}));
+
+    const report = await crawlPage(url, url, {});
+    await Promise.all([report]);
+    printReport(report);
 }
 
 main();
