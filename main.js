@@ -3,6 +3,7 @@ const {printReport} = require('./report');
 
 
 async function main(){
+    //Makes sure only starting link is passed in when started
     if (process.argv.length !== 3){
         throw "Use only 1 input argument";
     }
@@ -10,7 +11,6 @@ async function main(){
     console.log(`The web crawler will start at ${url}`)
 
     const report = await crawlPage(url, url, {});
-    await Promise.all([report]);
     printReport(report);
 }
 

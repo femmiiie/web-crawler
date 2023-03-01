@@ -1,6 +1,6 @@
 const {JSDOM} = require('jsdom');
 
-
+//Takes given URL, makes it lowecase, and makes sure it's only the root path
 function normalizeURL(inUrl){
     inUrl.toLowerCase()
     try{
@@ -17,6 +17,8 @@ function normalizeURL(inUrl){
     return returnStr.slice(0, returnStr.length);
 }
 
+//Uses JSDOM. Takes all html fetched from webpage, gets all anchors, formats
+//all hrefs as a URL, and returns array of them
 function getURLsFromHTML(htmlBody, baseURL){
     if (htmlBody[0] !== '<'){
         console.log('Invalid HTML Body');
@@ -58,6 +60,7 @@ async function crawlPage(baseURL, currentURL, pages){
     //Sets initial value of new page
     pages[currentURL] = 1;
 
+    //Tries to get 
     try{
         let response = await fetch(baseURL);
         if(response.status>399){
@@ -80,13 +83,10 @@ async function crawlPage(baseURL, currentURL, pages){
         } catch(err) {
             console.log(err.message);
         }
-    //console.log(pages)
     return pages;  
 }
 
 
 module.exports = {
-    normalizeURL,
-    getURLsFromHTML,
     crawlPage
   };
